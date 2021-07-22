@@ -20,12 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//  PRODUCT ROUTES
 
 // Public Routes
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show']);
 Route::get('/products/search/{name}', [App\Http\Controllers\ProductController::class, 'search']);
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 
 
 // Protected Routes
@@ -33,8 +33,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/products', [App\Http\Controllers\ProductController::class, 'store']);
     Route::put('/products/{id}', [App\Http\Controllers\ProductController::class, 'update']);
     Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
 });
-
-// USER ROUTES
-
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);

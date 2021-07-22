@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controller\ProductController;
+use App\Http\Controller\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::resource('products', [App\Http\Controller\ProductController::class]);
+//  PRODUCT ROUTES
 
 // Public Routes
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'show']);
 Route::get('/products/search/{name}', [App\Http\Controllers\ProductController::class, 'search']);
+
 
 // Protected Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -32,3 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/products/{id}', [App\Http\Controllers\ProductController::class, 'update']);
     Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
 });
+
+// USER ROUTES
+
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
